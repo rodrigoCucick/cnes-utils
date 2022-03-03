@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+    <head>
+        <!-- <link rel="stylesheet" href="bootstrap.css"> -->
+        <link rel="stylesheet" href="styles.css">
+        <script src="jquery-3.6.0.js"></script>
+        <script src="parser.js"></script>
+        <title>Analisador de Arquivo XML do CNES</title>
+    </head>
+    <body>
+        <div class="container">
+            <!--Upload-->
+            <div class="child">
+                <fieldset class="fieldSetMenu">
+                    <legend class="fieldSetLegend">1. Insira o arquivo XML do CNES:</legend>
+                    <button name="btnFileSelect" id="btnFileSelect" class="buttonMenu">Selecionar Arquivo</button>
+                </fieldset>
+            </div>
+            <!--Op-->
+            <div class="child">
+                <fieldset class="fieldSetMenu">
+                    <legend class="fieldSetLegend">2. Selecione uma operação:</legend>
+                    <select name="cmbOp" id="cmbOp">
+                        <option value="NO_CNS" selected>Verificar profissionais sem CNS</option>
+                    </select>
+                </fieldset>
+            </div>
+            <!--Start-->
+            <div class="child">
+                <fieldset class="fieldSetMenu">
+                    <legend class="fieldSetLegend">3. Execute a operação:</legend>
+                    <button name="btnStart" id="btnStart" class="buttonMenu">Iniciar Operação</button>
+                </fieldset>
+            </div>
+        </div>
+        <hr>
+        <div>
+            <textarea name="txtaResult" id="txtaResult" cols="30" rows="10" hidden></textarea>
+        </div>
+    </body>
+</html>
