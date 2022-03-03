@@ -1,3 +1,21 @@
+$(document).ready(() => {
+    $("#divOp").hide();
+    $("#opt1").prop("selected", true);
+    $("#divStart").hide();
+
+    $("#btnFileSelect").on({
+        click: () => {
+            $("#divOp").show(500);
+        }
+    })
+
+    $("#cmbOp").on({
+        change: () => {
+            $("#divStart").show(500);
+        }
+    })
+});
+
 /* //xmlns="http://javafx.com/javafx/8.0.291" xmlns:fx="http://javafx.com/fxml/1"
 
 public class Controller {

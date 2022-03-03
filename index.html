@@ -8,34 +8,37 @@
         <title>Analisador de Arquivo XML do CNES</title>
     </head>
     <body>
-        <div class="container">
+        <div>
             <!--Upload-->
-            <div class="child">
+            <div id="divFileSelect">
                 <fieldset class="fieldSetMenu">
                     <legend class="fieldSetLegend">1. Insira o arquivo XML do CNES:</legend>
                     <button name="btnFileSelect" id="btnFileSelect" class="buttonMenu">Selecionar Arquivo</button>
                 </fieldset>
             </div>
             <!--Op-->
-            <div class="child">
+            <div id="divOp">
                 <fieldset class="fieldSetMenu">
                     <legend class="fieldSetLegend">2. Selecione uma operação:</legend>
-                    <select name="cmbOp" id="cmbOp">
-                        <option value="NO_CNS" selected>Verificar profissionais sem CNS</option>
+                    <select name="cmbOp" id="cmbOp" class="comboOp">
+                        <option id="opt1" value="" selected>...</option>
+                        <option id="opt2" value="NO_CNS">Verificar profissionais sem CNS</option>
                     </select>
                 </fieldset>
             </div>
             <!--Start-->
-            <div class="child">
+            <div id="divStart">
                 <fieldset class="fieldSetMenu">
                     <legend class="fieldSetLegend">3. Execute a operação:</legend>
-                    <button name="btnStart" id="btnStart" class="buttonMenu">Iniciar Operação</button>
+                    <button name="btnStart" id="btnStart" class="buttonMenu">Executar</button>
                 </fieldset>
             </div>
         </div>
         <hr>
         <div>
-            <textarea name="txtaResult" id="txtaResult" cols="30" rows="10" hidden></textarea>
+            <div>
+                <textarea name="txtaResult" id="txtaResult" cols="30" rows="10" ></textarea>
+            </div>
         </div>
     </body>
 </html>
