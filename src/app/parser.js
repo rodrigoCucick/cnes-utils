@@ -1,28 +1,36 @@
 const MILI = 500;
 var file = null;
 var XMLStr = null;
-var XMLDoc = null;
 
 function resetFile() {
     file = null;
     XMLStr = null;
-    XMLDoc = null;
 }
 
 function prepareDOM() {
     $("#divOp").hide();
     $("#opt1").prop("selected", true);
     $("#divStart").hide();
+    $("#divResults").hide();
+    $("#txtaResultAna").val("");
+    $("#txtaResultSin").val("");
 }
 
 function resetApp() {
     resetFile();
-    $("#imgFile").hide(MILI);
+    hideSuccessImgs();
     hideFileNameDOM()
     $("#btnFileSelect").text("Selecionar Arquivo");
     $("#divOp").hide(MILI);
     $("#opt1").prop("selected", true);
     $("#divStart").hide(MILI);
+    resetResults();
+}
+
+function hideSuccessImgs() {
+    $("#imgFile").hide(MILI);
+    $("#imgOp").hide(MILI);
+    $("#imgStart").hide(MILI);
 }
 
 function showFileNameDOM(fileName, fileSize) {
@@ -35,8 +43,15 @@ function hideFileNameDOM() {
 }
 
 function resetOpAndStartMenus() {
+    $("#imgOp").hide(MILI);
+    $("#imgStart").hide(MILI);
     $("#opt1").prop("selected", true);
     $("#divStart").hide(MILI);
+    resetResults();
+}
+
+function resetResults() {
+    $("#divResults").fadeOut(MILI);
 }
 
 function isXMLValid(file) {
@@ -48,20 +63,36 @@ function isXMLValid(file) {
 }
 
 function parseXML(opCode) {
-    let regExp = null;
+    const lineArray = XMLStr.split("\n");
 
     switch (opCode) {
-        case "NR_ESTAB":
-            regExp = /NOME_FANTA/gi;
-            $("#txtaResult").text(XMLStr.match(regExp).length);
+        case "ESTAB":
+            const searchProp = 'NOME_FANTA="';
+            let propArr = [];
+            for (let i = 0; i < lineArray.length; i++) {
+                let indexOfProp = lineArray[i].toUpperCase().indexOf(searchProp);
+
+                if (indexOfProp > 0) {
+                    let startPoint = indexOfProp + searchProp.length;
+                    let endPoint =  lineArray[i].toUpperCase().indexOf('"', startPoint);
+                    let estab = lineArray[i].toUpperCase().substring(startPoint, endPoint);
+                    propArr.push(estab);
+                }
+            }
+
+            if (propArr.length > 0) {
+                propArr.sort();
+                $("#txtaResultSin").val("Total de estabelecimentos: " + propArr.length);
+                $("#txtaResultAna").val("Lista de estabelecimentos (em ordem alfabética):\n");
+                
+                for (let i = 0; i < propArr.length; i++) {
+                    $("#txtaResultAna").val($("#txtaResultAna").val() + "\n" + propArr[i]);
+                }
+            }
             break;
-        case "NR_PROF":
-            regExp = /CPF_PROF/gi;
-            $("#txtaResult").text(XMLStr.match(regExp).length);
+        case "PROF":
             break;
-        case "NO_CNS":
-            const lineArray = XMLStr.split("\n");
-            $("#txtaResult").text(lineArray.length);
+        case "PROF_NO_CNS":
             break;
         case "NO_OP":
             break;
@@ -119,17 +150,23 @@ function prepareEvents() {
     $("#cmbOp").on({
         change: () => {
             if ($("#cmbOp").val() != "NO_OP") {
+                $("#imgOp").show(MILI);
                 $("#divStart").show(MILI);
             } else {
+                $("#imgOp").hide(MILI);
                 $("#divStart").hide(MILI);
             }
+            resetResults();
         }
     });
 
     // 3. Operation start.
     $("#btnStart").on({
         click: () => {
+            $("#txtaResultAna").val("");
+            $("#txtaResultSin").val("");
             parseXML($("#cmbOp").val());
+            $("#divResults").fadeIn(MILI);
         }
     });
 

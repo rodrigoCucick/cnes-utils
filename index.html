@@ -1,20 +1,19 @@
 <!DOCTYPE html>
 <html lang="pt-br">
     <head>
-        <!-- <link rel="stylesheet" href="styles/bootstrap.css"> -->
         <link rel="stylesheet" href="styles/styles.css">
         <script src="libs/jquery-3.6.0.js"></script>
         <script src="src/app/parser.js"></script>
         <title>Analisador de Arquivo XML do CNES</title>
     </head>
     <body>
+        <!-- Menu -->
         <div>
-            <!--Upload-->
+            <!-- Upload -->
             <div id="divFileSelect">
                 <fieldset class="fieldSetMenu">
                     <legend class="fieldSetLegend">
-                        <img name="imgFile" id="imgFile" src="res/green-check.png" alt="sucesso" width="20px" height="15px" hidden>
-                        1. Insira o arquivo XML do CNES:
+                        &emsp;<img name="imgFile" id="imgFile" src="res/green-check.png" alt="sucesso" width="20px" height="15px" hidden><b>1.</b> Insira o arquivo XML do CNES:&emsp;
                     </legend>
                     <input type="file" id="inputFile" hidden>
                     <div id="divFileName" class="divFileName" hidden>
@@ -24,30 +23,43 @@
                     <button name="btnFileSelect" id="btnFileSelect" class="buttonMenu">Selecionar Arquivo</button>
                 </fieldset>
             </div>
-            <!--Op-->
+            <!-- Op -->
             <div id="divOp">
                 <fieldset class="fieldSetMenu">
-                    <legend class="fieldSetLegend">2. Selecione uma operação:</legend>
+                    <legend class="fieldSetLegend">
+                        &emsp;<img name="imgOp" id="imgOp" src="res/green-check.png" alt="sucesso" width="20px" height="15px" hidden><b>2.</b> Selecione uma operação:&emsp;</legend>
                     <select name="cmbOp" id="cmbOp" class="comboOp">
                         <option id="opt1" value="NO_OP" selected>...</option>
-                        <option id="opt2" value="NR_ESTAB">Verificar número total de estabelecimentos</option>
-                        <option id="opt3" value="NR_PROF">Verificar número total de profissionais</option>
-                        <option id="opt4" value="NO_CNS">Verificar profissionais sem CNS</option>
+                        <option id="opt2" value="ESTAB">Verificar estabelecimentos</option>
+                        <option id="opt3" value="PROF">Verificar profissionais</option>
+                        <option id="opt4" value="PROF_NO_CNS">Verificar profissionais sem CNS</option>
                     </select>
                 </fieldset>
             </div>
-            <!--Start-->
+            <!-- Start -->
             <div id="divStart">
                 <fieldset class="fieldSetMenu">
-                    <legend class="fieldSetLegend">3. Execute a operação:</legend>
+                    <legend class="fieldSetLegend">
+                        &emsp;<img name="imgStart" id="imgStart" src="res/green-check.png" alt="sucesso" width="20px" height="15px" hidden><b>3.</b> Execute a operação:&emsp;</legend>
                     <button name="btnStart" id="btnStart" class="buttonMenu">Executar</button>
                 </fieldset>
             </div>
         </div>
         <hr>
-        <div>
+        <!-- Results -->
+        <div id="divResults" hidden>
+            <h2 class="titleResults">Resultados</h2>
             <div>
-                <textarea name="txtaResult" id="txtaResult" cols="30" rows="10"></textarea>
+                <fieldset class="fieldSetResult">
+                    <legend class="fieldSetLegend">&emsp;Análitico:&emsp;</legend>
+                    <textarea name="txtaResultAna" id="txtaResultAna" class="textAreaResult" disabled></textarea>
+                </fieldset>
+            </div>
+            <div>
+                <fieldset class="fieldSetResult">
+                    <legend class="fieldSetLegend">&emsp;Sintético:&emsp;</legend>
+                    <textarea name="txtaResultSin" id="txtaResultSin" class="textAreaResult" disabled></textarea>
+                </fieldset>
             </div>
         </div>
     </body>

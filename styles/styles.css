@@ -7,6 +7,25 @@
     border-radius: 5px;
 }
 
+.fieldSetResult {
+    padding: 1%;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+.titleResults {
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: center;
+}
+
+.textAreaResult {
+    font-family: Arial, Helvetica, sans-serif;
+    width: 99%;
+    height: 200px;
+    resize: none;
+    border-radius: 4px;
+}
+
 label {
     pointer-events: none;
 }
