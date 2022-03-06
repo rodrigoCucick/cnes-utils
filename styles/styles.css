@@ -44,35 +44,67 @@ label {
 
 .buttonMenu {
     font-family: Arial, Helvetica, sans-serif;
+    background-color: #f6f8fa;
+    border: 1px solid;
+    border-radius: 6px;
+    border-color: rgba(0, 0, 0, 0.3);
     width: 50%;
     height: 30px;
     margin-left: 25%;
-    transition: box-shadow 0.3s
+    transition: box-shadow 0.2s
 }
 
 .buttonMenu:hover {
-    box-shadow: 1px 1px 5px 0px rgba(0, 0, 0, 0.5);
+    box-shadow: 1px 1px 4px 0px rgba(0, 0, 0, 0.5);
+}
+
+.buttonStart {
+    font-family: Arial, Helvetica, sans-serif;
+    color: white;
+    background-color: #2da44e;
+    border: 1px solid;
+    border-radius: 6px;
+    border-color: #2a9047;
+    width: 50%;
+    height: 30px;
+    margin-left: 25%;
+    transition: box-shadow 0.2s
+}
+
+.buttonStart:hover {
+    box-shadow: 1px 1px 4px 0px rgba(0, 0, 0, 0.5);
 }
 
 .buttonClean {
     font-family: Arial, Helvetica, sans-serif;
+    color: #cf222e;
+    background-color: #f6f8fa;
+    border: 1px solid;
+    border-radius: 6px;
+    border-color: rgba(0, 0, 0, 0.3);
     height: 30px;
-    transition: box-shadow 0.3s;
+    transition: color 0.2s, background-color 0.2s, box-shadow 0.2s;
 }
 
 .buttonClean:hover {
-    box-shadow: 1px 1px 5px 0px rgba(0, 0, 0, 0.5);
+    color: white;
+    background-color: #cf222e;
+    box-shadow: 1px 1px 4px 0px rgba(0, 0, 0, 0.5);
 }
 
 .comboOp {
     font-family: Arial, Helvetica, sans-serif;
     text-align: center;
+    background-color: #f6f8fa;
+    border: 1px solid;
+    border-radius: 6px;
+    border-color: rgba(0, 0, 0, 0.3);
     width: 50%;
     height: 30px;
     margin-left: 25%;
-    transition: box-shadow 0.3s
+    transition: box-shadow 0.2s
 }
 
 .comboOp:hover {
-    box-shadow: 1px 1px 5px 0px rgba(0, 0, 0, 0.5);
+    box-shadow: 1px 1px 4px 0px rgba(0, 0, 0, 0.5);
 }

@@ -121,7 +121,7 @@ function prepareEvents() {
 
             $("#imgFile").show(MILI);
             showFileNameDOM(fileLoaded.name, fileLoaded.size);
-            $("#btnFileSelect").text("Selecionar Outro Arquivo");
+            $("#btnFileSelect").text("Selecionar outro arquivo");
             resetOpAndStartMenus();
 
             const filePromisse = fileLoaded.text();
