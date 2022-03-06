@@ -1,8 +1,12 @@
 const MILI = 500;
 var file = null;
+var XMLStr = null;
+var XMLDoc = null;
 
 function resetFile() {
     file = null;
+    XMLStr = null;
+    XMLDoc = null;
 }
 
 function prepareDOM() {
@@ -43,6 +47,29 @@ function isXMLValid(file) {
     return true;
 }
 
+function parseXML(opCode) {
+    let regExp = null;
+
+    switch (opCode) {
+        case "NR_ESTAB":
+            regExp = /NOME_FANTA/gi;
+            $("#txtaResult").text(XMLStr.match(regExp).length);
+            break;
+        case "NR_PROF":
+            regExp = /CPF_PROF/gi;
+            $("#txtaResult").text(XMLStr.match(regExp).length);
+            break;
+        case "NO_CNS":
+            const lineArray = XMLStr.split("\n");
+            $("#txtaResult").text(lineArray.length);
+            break;
+        case "NO_OP":
+            break;
+        default:
+            break;
+    }
+}
+
 function prepareEvents() {
     // 1. File select.
     $("#inputFile").on({
@@ -71,6 +98,7 @@ function prepareEvents() {
             filePromisse.then((fileContent) => {
                 if (fileLoaded != null) {
                     file = fileLoaded;
+                    XMLStr = fileContent;
                     $("#divOp").show(MILI);
                 }
             }).catch((err) => {
@@ -101,7 +129,7 @@ function prepareEvents() {
     // 3. Operation start.
     $("#btnStart").on({
         click: () => {
-
+            parseXML($("#cmbOp").val());
         }
     });
 
