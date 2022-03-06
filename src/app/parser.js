@@ -1,19 +1,121 @@
-$(document).ready(() => {
+const MILI = 500;
+var file = null;
+
+function resetFile() {
+    file = null;
+}
+
+function prepareDOM() {
     $("#divOp").hide();
     $("#opt1").prop("selected", true);
     $("#divStart").hide();
+}
+
+function resetApp() {
+    resetFile();
+    $("#imgFile").hide(MILI);
+    hideFileNameDOM()
+    $("#btnFileSelect").text("Selecionar Arquivo");
+    $("#divOp").hide(MILI);
+    $("#opt1").prop("selected", true);
+    $("#divStart").hide(MILI);
+}
+
+function showFileNameDOM(fileName, fileSize) {
+    $("#labelFileName").html("Arquivo selecionado: " + fileName + "<i> (" + fileSize + "bytes)</i>");
+    $("#divFileName").fadeIn(MILI);
+}
+
+function hideFileNameDOM() {
+    $("#divFileName").fadeOut(MILI);
+}
+
+function resetOpAndStartMenus() {
+    $("#opt1").prop("selected", true);
+    $("#divStart").hide(MILI);
+}
+
+function isXMLValid(file) {
+    // TODO - Rodrigo: Implement new validation for valid XML file.
+    if (!file.name.toUpperCase().endsWith(".XML")) {
+        return false;
+    }
+    return true;
+}
+
+function prepareEvents() {
+    // 1. File select.
+    $("#inputFile").on({
+        change: () => {
+            const fileLoaded = document.getElementById("inputFile").files[0];
+
+            // Prevents unnecessary processing if the file is the same.
+            if ((file != null && fileLoaded != null) && (fileLoaded.name == file.name)) {
+                return;
+            }
+
+            // Validate if the selected file is a valid XML file.
+            if (!isXMLValid(fileLoaded)) {
+                // TODO - Rodrigo: Treat incompatible file extension.
+                console.log("Arquivo selecionado não é XML!");
+                return;
+            }
+
+            $("#imgFile").show(MILI);
+            showFileNameDOM(fileLoaded.name, fileLoaded.size);
+            $("#btnFileSelect").text("Selecionar Outro Arquivo");
+            resetOpAndStartMenus();
+
+            const filePromisse = fileLoaded.text();
+            
+            filePromisse.then((fileContent) => {
+                if (fileLoaded != null) {
+                    file = fileLoaded;
+                    $("#divOp").show(MILI);
+                }
+            }).catch((err) => {
+                // TODO - Rodrigo: Treat error message.
+                console.log(err);
+                resetApp();
+            });
+        }
+    });
 
     $("#btnFileSelect").on({
         click: () => {
-            $("#divOp").show(500);
+            $("#inputFile").click();
         }
-    })
+    });
 
+    // 2. Operation select.
     $("#cmbOp").on({
         change: () => {
-            $("#divStart").show(500);
+            if ($("#cmbOp").val() != "NO_OP") {
+                $("#divStart").show(MILI);
+            } else {
+                $("#divStart").hide(MILI);
+            }
         }
-    })
+    });
+
+    // 3. Operation start.
+    $("#btnStart").on({
+        click: () => {
+
+        }
+    });
+
+    // X. Clean selected file.
+    $("#btnClean").on({
+        click: () => {
+            resetApp();
+        }
+    });
+}
+
+$(document).ready(() => {
+    prepareDOM();
+    prepareEvents();
 });
 
 /* //xmlns="http://javafx.com/javafx/8.0.291" xmlns:fx="http://javafx.com/fxml/1"

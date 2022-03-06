@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="pt-br">
     <head>
-        <!-- <link rel="stylesheet" href="bootstrap.css"> -->
-        <link rel="stylesheet" href="styles.css">
-        <script src="jquery-3.6.0.js"></script>
-        <script src="parser.js"></script>
+        <!-- <link rel="stylesheet" href="styles/bootstrap.css"> -->
+        <link rel="stylesheet" href="styles/styles.css">
+        <script src="libs/jquery-3.6.0.js"></script>
+        <script src="src/app/parser.js"></script>
         <title>Analisador de Arquivo XML do CNES</title>
     </head>
     <body>
@@ -12,7 +12,15 @@
             <!--Upload-->
             <div id="divFileSelect">
                 <fieldset class="fieldSetMenu">
-                    <legend class="fieldSetLegend">1. Insira o arquivo XML do CNES:</legend>
+                    <legend class="fieldSetLegend">
+                        <img name="imgFile" id="imgFile" src="res/green-check.png" alt="sucesso" width="20px" height="15px" hidden>
+                        1. Insira o arquivo XML do CNES:
+                    </legend>
+                    <input type="file" id="inputFile" hidden>
+                    <div id="divFileName" class="divFileName" hidden>
+                        <label for="btnClean" name="labelFileName" id="labelFileName" class="fileName" disabled></label>
+                        <button name="btnClean" id="btnClean" class="buttonClean">Limpar</button>
+                    </div>
                     <button name="btnFileSelect" id="btnFileSelect" class="buttonMenu">Selecionar Arquivo</button>
                 </fieldset>
             </div>
@@ -21,7 +29,7 @@
                 <fieldset class="fieldSetMenu">
                     <legend class="fieldSetLegend">2. Selecione uma operação:</legend>
                     <select name="cmbOp" id="cmbOp" class="comboOp">
-                        <option id="opt1" value="" selected>...</option>
+                        <option id="opt1" value="NO_OP" selected>...</option>
                         <option id="opt2" value="NO_CNS">Verificar profissionais sem CNS</option>
                     </select>
                 </fieldset>
@@ -37,7 +45,7 @@
         <hr>
         <div>
             <div>
-                <textarea name="txtaResult" id="txtaResult" cols="30" rows="10" ></textarea>
+                <textarea name="txtaResult" id="txtaResult" cols="30" rows="10" hidden></textarea>
             </div>
         </div>
     </body>
