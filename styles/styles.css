@@ -1,5 +1,38 @@
-.fieldSetLegend {
+body {
     font-family: Arial, Helvetica, sans-serif;
+}
+
+.modalContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.3);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s;
+}
+
+.modalContainer.show {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.modal {
+    background-color: white;
+    border-radius: 6px;
+    width: 350px;
+    height: 200px;
+    text-align: center;
+    padding: 50px;
+    box-shadow: 2px 2px 5px 0px rgba(0, 0, 0, 0.5);
+}
+
+.fieldSetLegend {
     margin: 0 auto;
 }
 
@@ -14,12 +47,10 @@
 }
 
 .titleResults {
-    font-family: Arial, Helvetica, sans-serif;
     text-align: center;
 }
 
 .textAreaResult {
-    font-family: Arial, Helvetica, sans-serif;
     width: 99%;
     height: 200px;
     resize: none;
@@ -38,12 +69,10 @@ label {
 }
 
 .fileName {
-    font-family: Arial, Helvetica, sans-serif;
     text-align: center;
 }
 
 .buttonMenu {
-    font-family: Arial, Helvetica, sans-serif;
     background-color: #f6f8fa;
     border: 1px solid;
     border-radius: 6px;
@@ -58,8 +87,21 @@ label {
     box-shadow: 1px 1px 4px 0px rgba(0, 0, 0, 0.5);
 }
 
+.buttonModal {
+    background-color: #f6f8fa;
+    border: 1px solid;
+    border-radius: 6px;
+    border-color: rgba(0, 0, 0, 0.3);
+    width: 50%;
+    height: 30px;
+    transition: box-shadow 0.2s
+}
+
+.buttonModal:hover {
+    box-shadow: 1px 1px 4px 0px rgba(0, 0, 0, 0.5);
+}
+
 .buttonStart {
-    font-family: Arial, Helvetica, sans-serif;
     color: white;
     background-color: #2da44e;
     border: 1px solid;
@@ -76,7 +118,6 @@ label {
 }
 
 .buttonClean {
-    font-family: Arial, Helvetica, sans-serif;
     color: #cf222e;
     background-color: #f6f8fa;
     border: 1px solid;
@@ -93,7 +134,6 @@ label {
 }
 
 .comboOp {
-    font-family: Arial, Helvetica, sans-serif;
     text-align: center;
     background-color: #f6f8fa;
     border: 1px solid;
