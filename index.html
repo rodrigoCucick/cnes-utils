@@ -58,19 +58,29 @@
         <!-- Results -->
         <div id="divResults" hidden>
             <h2 class="titleResults">Resultados</h2>
+            <!-- Alignment -->
+            <div id="divAlign" class="divAlign">
+                <legend>Alinhamento do texto:</legend>
+                <button name="btnAlignLeft" id="btnAlignLeft" class="buttonAlign">Esquerda</button>
+                <button name="btnAlignCenter" id="btnAlignCenter" class="buttonAlign">Centralizado</button>
+                <button name="btnAlignRight" id="btnAlignRight" class="buttonAlign">Direita</button>
+            </div>
+            <!-- Analytic -->
             <div>
                 <fieldset class="fieldSetResult">
                     <legend class="fieldSetLegend">&emsp;Analítico:&emsp;</legend>
-                    <textarea name="txtaResultAna" id="txtaResultAna" class="textAreaResult" readonly></textarea>
+                    <div name="divResultAna" id="divResultAna" class="divResult" contenteditable="false"></div>
                 </fieldset>
             </div>
+            <!-- Synthetic -->
             <div>
                 <fieldset class="fieldSetResult">
                     <legend class="fieldSetLegend">&emsp;Sintético:&emsp;</legend>
-                    <textarea name="txtaResultSin" id="txtaResultSin" class="textAreaResult" readonly></textarea>
+                    <div name="divResultSin" id="divResultSin" class="divResult" contenteditable="false"></div>
                 </fieldset>
             </div>
         </div>
+        <!-- Footer -->
         <footer style="text-align: center;">
             <a href="https://github.com/rodrigoCucick/cnes-utils">
                 <img src="res/GitHub-Mark-32px.png" alt="Link do projeto no GitHub" title="Link do projeto no GitHub">

@@ -12,8 +12,8 @@ function prepareDOM() {
     $("#opt1").prop("selected", true);
     $("#divStart").hide();
     $("#divResults").hide();
-    $("#txtaResultAna").val("");
-    $("#txtaResultSin").val("");
+    $("#divResultAna").text("");
+    $("#divResultSin").text("");
 }
 
 function resetApp() {
@@ -92,11 +92,11 @@ function parseXML(opCode) {
 
             if (propArr.length > 0) {
                 propArr.sort();
-                $("#txtaResultSin").val("Total de estabelecimentos: " + propArr.length);
-                $("#txtaResultAna").val("Lista de estabelecimentos (em ordem alfabética):\n");
+                $("#divResultSin").html('Total de estabelecimentos: <span style="font-size: 24px; font-weight: bold; text-align: center">' + propArr.length + '</span>');
+                $("#divResultAna").html("Lista de estabelecimentos (<i>em ordem alfabética<i>):<br>");
                 
                 for (let i = 0; i < propArr.length; i++) {
-                    $("#txtaResultAna").val($("#txtaResultAna").val() + "\n" + propArr[i]);
+                    $("#divResultAna").append("<br>" + propArr[i]);
                 }
             }
             break;
@@ -170,24 +170,49 @@ function prepareEvents() {
     // 3. Operation start.
     $("#btnStart").on({
         click: () => {
-            $("#txtaResultAna").val("");
-            $("#txtaResultSin").val("");
+            $("#divResultAna").text("");
+            $("#divResultSin").text("");
             parseXML($("#cmbOp").val());
             $("#divResults").fadeIn(MILI);
         }
     });
 
-    // X. Clean selected file.
+    // Clean selected file.
     $("#btnClean").on({
         click: () => {
             resetApp();
         }
     });
 
-    // X. Close modal dialog
+    // Close modal dialog.
     $("#btnModal").on({
         click: () => {
             hideModalDialog();
+        }
+    });
+
+    /* Alignment buttons. */
+    // Left.
+    $("#btnAlignLeft").on({
+        click: () => {
+            $(".divResult").removeClass("centerAlign");
+            $(".divResult").removeClass("rightAlign");
+        }
+    });
+
+    // Center.
+    $("#btnAlignCenter").on({
+        click: () => {
+            $(".divResult").addClass("centerAlign");
+            $(".divResult").removeClass("rightAlign");
+        }
+    });
+
+    // Right.
+    $("#btnAlignRight").on({
+        click: () => {
+            $(".divResult").removeClass("centerAlign");
+            $(".divResult").addClass("rightAlign");
         }
     });
 }
