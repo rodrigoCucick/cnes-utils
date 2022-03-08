@@ -1,10 +1,12 @@
-const MILI = 500;
+const mili = 500;
 var file = null;
 var XMLStr = null;
+var lineArray = null;
 
 function resetFile() {
     file = null;
     XMLStr = null;
+    lineArray = null;
 }
 
 function prepareDOM() {
@@ -21,37 +23,37 @@ function resetApp() {
     hideSuccessImgs();
     hideFileNameDOM()
     $("#btnFileSelect").text("Selecionar Arquivo");
-    $("#divOp").hide(MILI);
+    $("#divOp").hide(mili);
     $("#opt1").prop("selected", true);
-    $("#divStart").hide(MILI);
+    $("#divStart").hide(mili);
     resetResults();
 }
 
 function hideSuccessImgs() {
-    $("#imgFile").hide(MILI);
-    $("#imgOp").hide(MILI);
-    $("#imgStart").hide(MILI);
+    $("#imgFile").hide(mili);
+    $("#imgOp").hide(mili);
+    $("#imgStart").hide(mili);
 }
 
-function showFileNameDOM(fileName, fileSize) {
-    $("#labelFileName").html("Arquivo selecionado: " + fileName + "<i> (" + fileSize + "bytes)</i>");
-    $("#divFileName").fadeIn(MILI);
+function showFileNameDOM(fileName, fileLines, fileSize) {
+    $("#labelFileName").html("Arquivo selecionado: " + fileName + " (<i>" + fileLines + " linhas, " + fileSize + " bytes</i>)");
+    $("#divFileName").fadeIn(mili);
 }
 
 function hideFileNameDOM() {
-    $("#divFileName").fadeOut(MILI);
+    $("#divFileName").fadeOut(mili);
 }
 
 function resetOpAndStartMenus() {
-    $("#imgOp").hide(MILI);
-    $("#imgStart").hide(MILI);
+    $("#imgOp").hide(mili);
+    $("#imgStart").hide(mili);
     $("#opt1").prop("selected", true);
-    $("#divStart").hide(MILI);
+    $("#divStart").hide(mili);
     resetResults();
 }
 
 function resetResults() {
-    $("#divResults").fadeOut(MILI);
+    $("#divResults").fadeOut(mili);
 }
 
 function hideModalDialog() {
@@ -66,41 +68,59 @@ function showModalDialog(headingMsg, paragraphMsg, buttonMsg) {
 }
 
 function isXMLExtension(file) {
-    if (!file.name.toUpperCase().endsWith(".XML")) {
-        return false;
+    return file.name.toUpperCase().endsWith(".XML");
+}
+
+// TODO - Rodrigo: Develop findElem function.
+
+function findXMLProps(searchProp, propArr) {
+    for (let i = 0; i < lineArray.length; i++) {
+        let indexOfProp = lineArray[i].toUpperCase().indexOf(searchProp);
+
+        if (indexOfProp > 0) {
+            let startPoint = indexOfProp + searchProp.length;
+            let endPoint =  lineArray[i].toUpperCase().indexOf('"', startPoint);
+            let prop = lineArray[i].toUpperCase().substring(startPoint, endPoint);
+            propArr.push(prop);
+        }
     }
-    return true;
 }
 
 function parseXML(opCode) {
-    const lineArray = XMLStr.split("\n");
+    let propArr = [];
 
     switch (opCode) {
         case "ESTAB":
-            const searchProp = 'NOME_FANTA="';
-            let propArr = [];
-            for (let i = 0; i < lineArray.length; i++) {
-                let indexOfProp = lineArray[i].toUpperCase().indexOf(searchProp);
-
-                if (indexOfProp > 0) {
-                    let startPoint = indexOfProp + searchProp.length;
-                    let endPoint =  lineArray[i].toUpperCase().indexOf('"', startPoint);
-                    let estab = lineArray[i].toUpperCase().substring(startPoint, endPoint);
-                    propArr.push(estab);
-                }
-            }
+            findXMLProps('NOME_FANTA="', propArr);
 
             if (propArr.length > 0) {
                 propArr.sort();
-                $("#divResultSin").html('Total de estabelecimentos: <span style="font-size: 24px; font-weight: bold; text-align: center">' + propArr.length + '</span>');
+                
+                $("#divResultSin").html("Total de estabelecimentos: <b>" + propArr.length + "</b>");
                 $("#divResultAna").html("Lista de estabelecimentos (<i>em ordem alfabética<i>):<br>");
                 
                 for (let i = 0; i < propArr.length; i++) {
                     $("#divResultAna").append("<br>" + propArr[i]);
                 }
             }
+
             break;
         case "PROF":
+            findXMLProps('NOME_PROF="', propArr);
+
+            if (propArr.length > 0) {
+                propArr.sort();
+                const uniqueProps = [...new Set(propArr)];
+
+                $("#divResultSin").html("Total de profissionais distintos: <b>" + uniqueProps.length + "</b><br>");
+                $("#divResultSin").append("Total geral de profissionais (<i>um profissional pode estar lotado em mais de um estabelecimento</i>): <b>" + propArr.length + "</b>");
+                $("#divResultAna").html("Lista de profissionais distintos (<i>em ordem alfabética<i>):<br>");
+                
+                for (let i = 0; i < uniqueProps.length; i++) {
+                    $("#divResultAna").append("<br>" + uniqueProps[i]);
+                }
+            }
+
             break;
         case "PROF_NO_CNS":
             break;
@@ -112,6 +132,13 @@ function parseXML(opCode) {
 }
 
 function prepareEvents() {
+    // 0. Alias for file select.
+    $("#btnFileSelect").on({
+        click: () => {
+            $("#inputFile").click();
+        }
+    });
+
     // 1. File select.
     $("#inputFile").on({
         change: () => {
@@ -127,18 +154,17 @@ function prepareEvents() {
                 return;
             }
 
-            $("#imgFile").show(MILI);
-            showFileNameDOM(fileLoaded.name, fileLoaded.size);
-            $("#btnFileSelect").text("Selecionar outro arquivo");
-            resetOpAndStartMenus();
-
-            const filePromisse = fileLoaded.text();
-            
-            filePromisse.then((fileContent) => {
+            fileLoaded.text().then((fileContent) => {
                 if (fileLoaded != null) {
                     file = fileLoaded;
                     XMLStr = fileContent;
-                    $("#divOp").show(MILI);
+                    lineArray = XMLStr.split("\n");
+
+                    $("#imgFile").show(mili);
+                    showFileNameDOM(fileLoaded.name, lineArray.length, fileLoaded.size);
+                    $("#btnFileSelect").text("Selecionar outro arquivo");
+                    resetOpAndStartMenus();
+                    $("#divOp").show(mili);
                 }
             }).catch((err) => {
                 showModalDialog("Erro", "O arquivo selecionado não é válido!", "Fechar");
@@ -147,21 +173,15 @@ function prepareEvents() {
         }
     });
 
-    $("#btnFileSelect").on({
-        click: () => {
-            $("#inputFile").click();
-        }
-    });
-
     // 2. Operation select.
     $("#cmbOp").on({
         change: () => {
             if ($("#cmbOp").val() != "NO_OP") {
-                $("#imgOp").show(MILI);
-                $("#divStart").show(MILI);
+                $("#imgOp").show(mili);
+                $("#divStart").show(mili);
             } else {
-                $("#imgOp").hide(MILI);
-                $("#divStart").hide(MILI);
+                $("#imgOp").hide(mili);
+                $("#divStart").hide(mili);
             }
             resetResults();
         }
@@ -173,7 +193,7 @@ function prepareEvents() {
             $("#divResultAna").text("");
             $("#divResultSin").text("");
             parseXML($("#cmbOp").val());
-            $("#divResults").fadeIn(MILI);
+            $("#divResults").fadeIn(mili);
         }
     });
 

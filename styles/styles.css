@@ -2,6 +2,14 @@ body {
     font-family: Arial, Helvetica, sans-serif;
 }
 
+button {
+    cursor: pointer;
+}
+
+select{
+    cursor: pointer;
+}
+
 .modalContainer {
     display: flex;
     align-items: center;
@@ -58,6 +66,10 @@ body {
     border-radius: 4px;
 }
 
+.divResult.synth {
+    font-size: 24px;
+}
+
 .divResult.centerAlign {
     text-align: center;
 }
@@ -96,7 +108,7 @@ label {
     width: 50%;
     height: 30px;
     margin-left: 25%;
-    transition: box-shadow 0.2s
+    transition: box-shadow 0.2s;
 }
 
 .buttonMenu:hover {
@@ -110,7 +122,7 @@ label {
     border-color: rgba(0, 0, 0, 0.3);
     width: 85px;
     height: 20px;
-    transition: box-shadow 0.2s
+    transition: box-shadow 0.2s;
 }
 
 .buttonAlign:hover {
@@ -124,7 +136,7 @@ label {
     border-color: rgba(0, 0, 0, 0.3);
     width: 50%;
     height: 30px;
-    transition: box-shadow 0.2s
+    transition: box-shadow 0.2s;
 }
 
 .buttonModal:hover {
@@ -140,7 +152,7 @@ label {
     width: 50%;
     height: 30px;
     margin-left: 25%;
-    transition: box-shadow 0.2s
+    transition: box-shadow 0.2s;
 }
 
 .buttonStart:hover {
@@ -172,7 +184,7 @@ label {
     width: 50%;
     height: 30px;
     margin-left: 25%;
-    transition: box-shadow 0.2s
+    transition: box-shadow 0.2s;
 }
 
 .comboOp:hover {
