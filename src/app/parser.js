@@ -71,11 +71,33 @@ function isXMLExtension(file) {
     return file.name.toUpperCase().endsWith(".XML");
 }
 
-// TODO - Rodrigo: Develop findElem function.
+function findXMLElem(searchElem, elemDataArr) {
+    const startElem = "<" + searchElem.toUpperCase();
+    const endElem = "</" + searchElem.toUpperCase() + ">";
 
-function findXMLProps(searchProp, propArr) {
+    let elemData = "";
+    let startElemFound = false;
     for (let i = 0; i < lineArray.length; i++) {
-        let indexOfProp = lineArray[i].toUpperCase().indexOf(searchProp);
+        if (!startElemFound && lineArray[i].toUpperCase().indexOf(startElem) > 0) {
+            elemData = lineArray[i];
+            startElemFound = true;
+            continue;
+        }
+
+        if (startElemFound) {
+            elemData += lineArray[i];
+            if (lineArray[i].toUpperCase().indexOf(endElem) > 0) {
+                elemDataArr.push(elemData);
+                startElemFound = false;
+            }
+        }
+    }
+}
+
+function findXMLProp(searchProp, propArr) {
+    searchProp += '="';
+    for (let i = 0; i < lineArray.length; i++) {
+        let indexOfProp = lineArray[i].toUpperCase().indexOf(searchProp.toUpperCase());
 
         if (indexOfProp > 0) {
             let startPoint = indexOfProp + searchProp.length;
@@ -86,12 +108,28 @@ function findXMLProps(searchProp, propArr) {
     }
 }
 
+function findXMLPropCustomLineArray(searchProp, propArr, customLineArray) {
+    searchProp += '="';
+    for (let i = 0; i < customLineArray.length; i++) {
+        let indexOfProp = customLineArray[i].toUpperCase().indexOf(searchProp.toUpperCase());
+
+        if (indexOfProp > 0) {
+            let startPoint = indexOfProp + searchProp.length;
+            let endPoint =  customLineArray[i].toUpperCase().indexOf('"', startPoint);
+            let prop = customLineArray[i].toUpperCase().substring(startPoint, endPoint);
+            propArr.push(prop);
+        }
+    }
+}
+
 function parseXML(opCode) {
+    let elemDataArr = [];
     let propArr = [];
 
+    // TODO - Rodrigo: Add validation when no results found; if arr.len == 0.
     switch (opCode) {
         case "ESTAB":
-            findXMLProps('NOME_FANTA="', propArr);
+            findXMLProp("NOME_FANTA", propArr);
 
             if (propArr.length > 0) {
                 propArr.sort();
@@ -106,7 +144,7 @@ function parseXML(opCode) {
 
             break;
         case "PROF":
-            findXMLProps('NOME_PROF="', propArr);
+            findXMLProp("NOME_PROF", propArr);
 
             if (propArr.length > 0) {
                 propArr.sort();
@@ -122,7 +160,7 @@ function parseXML(opCode) {
             }
 
             break;
-        case "PROF_NO_CNS":
+        case "PROF_NO_CNS":          
             break;
         case "NO_OP":
             break;
