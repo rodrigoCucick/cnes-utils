@@ -8,7 +8,7 @@ Aplicação web que permite a realização de diferentes análises no arquivo XM
 ![image](https://user-images.githubusercontent.com/16089829/158038515-7988ae9d-da7d-4238-8bfe-b09fb21ac5b8.png)
 
 **3. Execução da análise:**
-![image](https://user-images.githubusercontent.com/16089829/158038532-87d8d13c-94ea-4823-aa22-7dcc8fcf58f7.png)
+![image](https://user-images.githubusercontent.com/16089829/158038574-5787e29d-9894-4084-8e5c-e5a0639a12d6.png)
 
 Link: https://rodrigocucick.github.io/cnes-utils/
 
