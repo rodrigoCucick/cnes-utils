@@ -1,17 +1,21 @@
 # Utilidades CNES
-Aplicação web que permite a realização de diferentes análises no arquivo XML do CNES em apenas 3 etapas.
+Aplicação web que permite a realização de diferentes análises no arquivo XML do CNES (Cadastro Nacional de Estabelecimentos de Saúde) em apenas 3 etapas.
 
 **1. Escolha do arquivo XML:**
-![image](https://user-images.githubusercontent.com/16089829/157032977-90b0518a-dfd7-4c40-ab72-4c7410342688.png)
+![image](https://user-images.githubusercontent.com/16089829/158038502-40898f2b-9ac2-4a9c-a785-c6f16943a9bb.png)
 
 **2. Escolha da operação de análise a ser realizada:**
-![image](https://user-images.githubusercontent.com/16089829/157033092-7ea33903-428b-47a3-af34-0d031d9f065b.png)
+![image](https://user-images.githubusercontent.com/16089829/158038515-7988ae9d-da7d-4238-8bfe-b09fb21ac5b8.png)
 
 **3. Execução da análise:**
-![image](https://user-images.githubusercontent.com/16089829/157032721-bb71470d-a3d3-44cb-95b1-14f9f565e5f1.png)
+![image](https://user-images.githubusercontent.com/16089829/158038532-87d8d13c-94ea-4823-aa22-7dcc8fcf58f7.png)
 
 Link: https://rodrigocucick.github.io/cnes-utils/
 
 Tanto para fins de segurança quanto para fins de necessidade (já que o GitHub Pages não suporta server-side code), todo o processamento de dados, desde a seleção do arquivo XML até o resultado final, é realizado diretamente no navegador do usuário (client-side).
+
+**Prioridades atuais de desenvolvimento:**
+1. Adicionar mais tipos de análise do arquivo XML do CNES. [CRÍTICA]
+2. Categorizar as análises (não utilizar apenas um único _combo box_ para todas elas).
 
 _Aplicação em constante desenvolvimento, portanto, num primeiro momento talvez a documentação não acompanhe as rápidas iterações de versões._
