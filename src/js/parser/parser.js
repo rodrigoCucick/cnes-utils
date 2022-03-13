@@ -36,115 +36,109 @@ const XMLParser = {
     },
 
     // Returns an str array with XML elements or -1 if not found.
-    findXMLElem: function(searchElem) {
+    findXMLElem: function(searchElem, strArr = null) {
+        if (strArr == null) {
+            strArr = this.lineArr;
+        }
+
         const startElem = "<" + searchElem.toUpperCase();
         const endElem   = "</" + searchElem.toUpperCase() + ">";
     
         let elemDataArr    = [];
         let elemData       = "";
         let startElemFound = false;
-        for (let i = 0; i < this.lineArr.length; i++) {
-            if (!startElemFound && this.lineArr[i].toUpperCase().indexOf(startElem) > 0) {
-                elemData = this.lineArr[i];
+
+        for (let i = 0; i < strArr.length; i++) {
+            if (!startElemFound && strArr[i].toUpperCase().indexOf(startElem) > 0) {
+                elemData = strArr[i];
                 startElemFound = true;
                 continue;
             }
     
             if (startElemFound) {
-                elemData += this.lineArr[i];
-                if (this.lineArr[i].toUpperCase().indexOf(endElem) > 0) {
+                elemData += strArr[i];
+                if (strArr[i].toUpperCase().indexOf(endElem) > 0) {
                     elemDataArr.push(elemData);
                     startElemFound = false;
                 }
             }
         }
 
-        return elemDataArr.length > 0 ? elemDataArr : -1;
+        return elemDataArr;
     },
 
     // Returns an str array with XML properties or -1 if not found.
-    findXMLProp: function(searchProp) {
+    findXMLProp: function(searchProp, strArr = null) {
+        if (strArr == null) {
+            strArr = this.lineArr;
+        }
+        
         searchProp += '="';
 
         let propArr = [];
-        for (let i = 0; i < this.lineArr.length; i++) {
-            let indexOfProp = this.lineArr[i].toUpperCase().indexOf(searchProp.toUpperCase());
+
+        for (let i = 0; i < strArr.length; i++) {
+            let indexOfProp = strArr[i].toUpperCase().indexOf(searchProp.toUpperCase());
     
             if (indexOfProp > 0) {
                 let startPoint = indexOfProp + searchProp.length;
-                let endPoint =  this.lineArr[i].toUpperCase().indexOf('"', startPoint);
-                let prop = this.lineArr[i].toUpperCase().substring(startPoint, endPoint);
+                let endPoint =  strArr[i].toUpperCase().indexOf('"', startPoint);
+                let prop = strArr[i].toUpperCase().substring(startPoint, endPoint);
                 propArr.push(prop);
             }
         }
 
-        return propArr.length > 0 ? propArr : -1;
+        return propArr;
     },
 
-    // Same as findXMLProp, but uses a custom line array to search the specified property.
-    findXMLPropCustomLineArray: function(searchProp, customLineArray) {
-        searchProp += '="';
+    estabOP: function() {
+        let dataArr = [];
 
-        let propArr = [];
-        for (let i = 0; i < customLineArray.length; i++) {
-            let indexOfProp = customLineArray[i].toUpperCase().indexOf(searchProp.toUpperCase());
+        $(this.XMLStr).find('DADOS_GERAIS_ESTABELECIMENTOS').each(function(index) {
+            dataArr[index] = [
+                $(this).attr('NOME_FANTA'),
+                $(this).attr('CNES'),
+                $(this).find('DADOS_PROFISSIONAIS').length
+            ];
+        });
+
+        if (dataArr.length > 0) {
+            $('#divResultAna').html('Lista de estabelecimentos:<br><br>');
+        
+            for (let i = 0; i < dataArr.length; i++) {
+                $('#divResultAna').append((i + 1) + ' - Nome: ' + dataArr[i][0] + '<ul><li>CNES: ' + dataArr[i][1] + '</li><li>Total de profissionais lotados: ' + dataArr[i][2] + '</li></ul>');
+            }
     
-            if (indexOfProp > 0) {
-                let startPoint = indexOfProp + searchProp.length;
-                let endPoint =  customLineArray[i].toUpperCase().indexOf('"', startPoint);
-                let prop = customLineArray[i].toUpperCase().substring(startPoint, endPoint);
-                propArr.push(prop);
+            $("#divResultSin").html("Total de estabelecimentos: <b>" + dataArr.length + "</b>");
+        }
+    },
+
+    profOP: function() {
+        let propArr = this.findXMLProp("NOME_PROF");
+    
+        if (propArr.length > 0) {
+            propArr.sort();
+            const uniqueProps = [...new Set(propArr)];
+
+            $("#divResultSin").html("Total de profissionais distintos: <b>" + uniqueProps.length + "</b><br>");
+            $("#divResultSin").append("Total geral de profissionais (<i>um profissional pode estar lotado em mais de um estabelecimento</i>): <b>" + propArr.length + "</b>");
+            $("#divResultAna").html("Lista de profissionais distintos (<i>em ordem alfabética<i>):<br>");
+            
+            for (let i = 0; i < uniqueProps.length; i++) {
+                $("#divResultAna").append("<br>" + uniqueProps[i]);
             }
         }
-
-        return propArr.length > 0 ? propArr : -1;
     },
 
     // TODO - Rodrigo: Add more operation types [MAIN OBJECTIVE].
+    // TODO - Rodrigo: Use JQuery for every XML doc manipulation.
     executeParseOperation: function(opCode) {
-        let propArr = [];
-
-        // TODO - Rodrigo: Add validation when no results found; if arr.len == 0.
-        // TODO - Rodrigo: Change to if statements instead of switch (cleaner aspect).
-        switch (opCode) {
-            case "ESTAB":
-                propArr = this.findXMLProp("NOME_FANTA");
-    
-                if (propArr.length > 0) {
-                    propArr.sort();
-                    
-                    $("#divResultSin").html("Total de estabelecimentos: <b>" + propArr.length + "</b>");
-                    $("#divResultAna").html("Lista de estabelecimentos (<i>em ordem alfabética<i>):<br>");
-                    
-                    for (let i = 0; i < propArr.length; i++) {
-                        $("#divResultAna").append("<br>" + propArr[i]);
-                    }
-                }
-    
-                break;
-            case "PROF":
-                propArr = this.findXMLProp("NOME_PROF", propArr);
-    
-                if (propArr.length > 0) {
-                    propArr.sort();
-                    const uniqueProps = [...new Set(propArr)];
-    
-                    $("#divResultSin").html("Total de profissionais distintos: <b>" + uniqueProps.length + "</b><br>");
-                    $("#divResultSin").append("Total geral de profissionais (<i>um profissional pode estar lotado em mais de um estabelecimento</i>): <b>" + propArr.length + "</b>");
-                    $("#divResultAna").html("Lista de profissionais distintos (<i>em ordem alfabética<i>):<br>");
-                    
-                    for (let i = 0; i < uniqueProps.length; i++) {
-                        $("#divResultAna").append("<br>" + uniqueProps[i]);
-                    }
-                }
-    
-                break;
-            case "PROF_NO_CNS":          
-                break;
-            case "NO_OP":
-                break;
-            default:
-                break;
+        if (opCode == "ESTAB") {
+            this.estabOP();
+        } else if (opCode == "PROF") {
+            this.profOP();
+        } else if (opCode == "PROF_NO_CNS") {
+            //
         }
     }
 };

@@ -64,6 +64,7 @@ select{
     overflow: auto;
     resize: none;
     border-radius: 4px;
+    resize: vertical;
 }
 
 .divResult.synth {

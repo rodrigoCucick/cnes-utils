@@ -16,7 +16,8 @@ Tanto para fins de segurança quanto para fins de necessidade (já que o GitHub 
 
 **Prioridades atuais de desenvolvimento:**
 1. Adicionar mais tipos de análise do arquivo XML do CNES. [CRÍTICA]
-2. Adicionar botão para exportar os resultados da análise realizada. [ALTA]
-3. Categorizar as análises (não utilizar apenas um único _combo box_ para todas elas).
+2. Utilizar as facilidades da biblioteca JQuery para o XML parsing. [CRÍTICA]
+3. Adicionar botão para exportar os resultados da análise realizada. [ALTA]
+4. Categorizar as análises (não utilizar apenas um único _combo box_ para todas elas).
 
 _Aplicação em constante desenvolvimento, portanto, num primeiro momento talvez a documentação não acompanhe as rápidas iterações de versões._
