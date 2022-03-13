@@ -1,0 +1,30 @@
+{
+  "name": "cnes-utils",
+  "version": "1.0.0",
+  "description": "Utilidade analisadora do arquivo XML do CNES. / Parser utility for the XML CNES file.",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rodrigoCucick/cnes-utils.git"
+  },
+  "keywords": [
+    "cnes",
+    "parser",
+    "xml",
+    "interpreter",
+    "public",
+    "health"
+  ],
+  "author": "Rodrigo M. Cucick",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/rodrigoCucick/cnes-utils/issues"
+  },
+  "homepage": "https://github.com/rodrigoCucick/cnes-utils#readme",
+  "dependencies": {
+    "typescript": "^4.6.2"
+  }
+}
