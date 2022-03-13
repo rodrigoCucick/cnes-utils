@@ -16,7 +16,11 @@
     "xml",
     "interpreter",
     "public",
-    "health"
+    "health",
+    "analisador",
+    "interpretador",
+    "saúde",
+    "pública"
   ],
   "author": "Rodrigo M. Cucick",
   "license": "MIT",
